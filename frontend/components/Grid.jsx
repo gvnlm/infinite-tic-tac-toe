@@ -13,6 +13,7 @@ const DRAW = 3;
 const Grid = () => {
   const [gameStatus, setGameStatus] = useState(ONGOING);
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
+  const [indexQueue, setIndexQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
 
   const handleClick = (index) => () => {
@@ -25,10 +26,18 @@ const Grid = () => {
     }
 
     const newCellValues = [...cellValues];
+    const newIndexQueue = [...indexQueue];
+
+    newIndexQueue.push(index);
+    if (newIndexQueue.length > 6) {
+      newCellValues[newIndexQueue.shift()] = null;
+    }
+
     newCellValues[index] = xIsNext ? 'X' : 'O';
 
     setGameStatus(getGameStatus(newCellValues));
     setCellValues(newCellValues);
+    setIndexQueue(newIndexQueue);
     setIsXNext((prev) => !prev);
   };
 
@@ -39,19 +48,55 @@ const Grid = () => {
       {gameStatus === DRAW && 'Draw!'}
 
       <div className="row">
-        <Cell value={cellValues[0]} onClick={handleClick(0)} />
-        <Cell value={cellValues[1]} onClick={handleClick(1)} />
-        <Cell value={cellValues[2]} onClick={handleClick(2)} />
+        <Cell
+          value={cellValues[0]}
+          onClick={handleClick(0)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 0}
+        />
+        <Cell
+          value={cellValues[1]}
+          onClick={handleClick(1)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 1}
+        />
+        <Cell
+          value={cellValues[2]}
+          onClick={handleClick(2)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 2}
+        />
       </div>
       <div className="row">
-        <Cell value={cellValues[3]} onClick={handleClick(3)} />
-        <Cell value={cellValues[4]} onClick={handleClick(4)} />
-        <Cell value={cellValues[5]} onClick={handleClick(5)} />
+        <Cell
+          value={cellValues[3]}
+          onClick={handleClick(3)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 3}
+        />
+        <Cell
+          value={cellValues[4]}
+          onClick={handleClick(4)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 4}
+        />
+        <Cell
+          value={cellValues[5]}
+          onClick={handleClick(5)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 5}
+        />
       </div>
       <div className="row">
-        <Cell value={cellValues[6]} onClick={handleClick(6)} />
-        <Cell value={cellValues[7]} onClick={handleClick(7)} />
-        <Cell value={cellValues[8]} onClick={handleClick(8)} />
+        <Cell
+          value={cellValues[6]}
+          onClick={handleClick(6)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 6}
+        />
+        <Cell
+          value={cellValues[7]}
+          onClick={handleClick(7)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 7}
+        />
+        <Cell
+          value={cellValues[8]}
+          onClick={handleClick(8)}
+          isNextToBeReset={gameStatus === ONGOING && indexQueue.length == 6 && indexQueue[0] === 8}
+        />
       </div>
     </div>
   );
