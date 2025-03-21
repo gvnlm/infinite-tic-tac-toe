@@ -10,11 +10,27 @@ const O_WON = 1;
 const ONGOING = 2;
 const DRAW = 3;
 
+const shepardTone = [
+  new Audio('/shepard-tone/1.mp3'),
+  new Audio('/shepard-tone/2.mp3'),
+  new Audio('/shepard-tone/3.mp3'),
+  new Audio('/shepard-tone/4.mp3'),
+  new Audio('/shepard-tone/5.mp3'),
+  new Audio('/shepard-tone/6.mp3'),
+  new Audio('/shepard-tone/7.mp3'),
+  new Audio('/shepard-tone/8.mp3'),
+  new Audio('/shepard-tone/9.mp3'),
+  new Audio('/shepard-tone/10.mp3'),
+  new Audio('/shepard-tone/11.mp3'),
+  new Audio('/shepard-tone/12.mp3'),
+];
+
 const Grid = () => {
   const [gameStatus, setGameStatus] = useState(ONGOING);
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
   const [indexQueue, setIndexQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
+  const [shepardToneIndex, setShepardToneIndex] = useState(0);
 
   const handleClick = (index) => () => {
     if (gameStatus !== ONGOING) {
@@ -24,6 +40,8 @@ const Grid = () => {
     if (cellValues[index] !== null) {
       return;
     }
+
+    shepardTone[shepardToneIndex].play();
 
     const newCellValues = [...cellValues];
     const newIndexQueue = [...indexQueue];
@@ -39,6 +57,7 @@ const Grid = () => {
     setCellValues(newCellValues);
     setIndexQueue(newIndexQueue);
     setIsXNext((prev) => !prev);
+    setShepardToneIndex((prev) => (prev === shepardTone.length - 1 ? 0 : prev + 1));
   };
 
   const renderCellRow = (row) => {
