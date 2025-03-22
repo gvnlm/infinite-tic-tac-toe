@@ -2,7 +2,7 @@ import Cell from './Cell';
 
 import '../styles/Grid.css';
 
-const Grid = ({ cellValues, indexOfNextToBeReset, onCellClickAt }) => {
+const Grid = ({ cellValues, nextCellToBeReset, onCellClickAt }) => {
   const renderRow = (row) => (
     <div key={row} className="row">
       {[0, 1, 2].map((col) => {
@@ -12,7 +12,7 @@ const Grid = ({ cellValues, indexOfNextToBeReset, onCellClickAt }) => {
             key={index}
             value={cellValues[index]}
             onCellClick={onCellClickAt(index)}
-            isNextToBeReset={index === indexOfNextToBeReset}
+            isNextToBeReset={index === nextCellToBeReset}
           />
         );
       })}
