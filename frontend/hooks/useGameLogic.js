@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GameStatus from '../constants/gameStatus';
 
 const shepardTone = [
@@ -16,12 +16,32 @@ const shepardTone = [
   new Audio('/shepard-tone/12.mp3'),
 ];
 
+const INITIAL_TIME_LIMIT = 10_000;
+const COUNTDOWN_INTERVAL = 100;
+
 const useGameLogic = () => {
   const [gameStatus, setGameStatus] = useState(GameStatus.ONGOING);
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
   const [indexQueue, setIndexQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
   const [shepardToneIndex, setShepardToneIndex] = useState(0);
+  const [timeLimit, setTimeLimit] = useState(INITIAL_TIME_LIMIT);
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+
+  // Handle countdown
+  useEffect(() => {
+    if (timeRemaining <= 0) {
+      setGameStatus(xIsNext ? GameStatus.O_WON : GameStatus.X_WON);
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      setTimeRemaining((prev) => prev - COUNTDOWN_INTERVAL);
+    }, COUNTDOWN_INTERVAL);
+
+    // On effect re-runs, clear previous timeout
+    return () => clearTimeout(timeoutId);
+  }, [timeRemaining, xIsNext]);
 
   const handleCellClickAt = (index) => () => {
     // If game over
@@ -52,12 +72,13 @@ const useGameLogic = () => {
     setIndexQueue(newIndexQueue);
     setIsXNext((prev) => !prev);
     setShepardToneIndex((prev) => (prev === shepardTone.length - 1 ? 0 : prev + 1));
+    setTimeRemaining(timeLimit);
   };
 
   const nextCellToBeReset =
     gameStatus === GameStatus.ONGOING && indexQueue.length === 6 ? indexQueue[0] : null;
 
-  return [cellValues, gameStatus, nextCellToBeReset, handleCellClickAt];
+  return [cellValues, gameStatus, nextCellToBeReset, handleCellClickAt, timeRemaining];
 };
 
 const getGameStatus = (cellValues) => {
