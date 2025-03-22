@@ -21,6 +21,7 @@ const COUNTDOWN_INTERVAL = 100;
 
 const useGameLogic = () => {
   const [gameStatus, setGameStatus] = useState(GameStatus.ONGOING);
+  const [round, setRound] = useState(1);
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
   const [indexQueue, setIndexQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
@@ -68,6 +69,7 @@ const useGameLogic = () => {
     newCellValues[index] = xIsNext ? 'X' : 'O';
 
     setGameStatus(getGameStatus(newCellValues));
+    setRound((prev) => prev + !xIsNext);
     setCellValues(newCellValues);
     setIndexQueue(newIndexQueue);
     setIsXNext((prev) => !prev);
@@ -78,7 +80,7 @@ const useGameLogic = () => {
   const nextCellToBeReset =
     gameStatus === GameStatus.ONGOING && indexQueue.length === 6 ? indexQueue[0] : null;
 
-  return [cellValues, gameStatus, nextCellToBeReset, handleCellClickAt, timeRemaining];
+  return [gameStatus, round, cellValues, nextCellToBeReset, handleCellClickAt, timeRemaining];
 };
 
 const getGameStatus = (cellValues) => {
