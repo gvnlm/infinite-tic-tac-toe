@@ -17,6 +17,8 @@ const shepardTone = [
 ];
 
 const INITIAL_TIME_LIMIT = 10_000;
+const MIN_TIME_LIMIT = 3_000;
+const TIME_LIMIT_DECREMENT = 500;
 const COUNTDOWN_INTERVAL = 100;
 
 const useGameLogic = () => {
@@ -59,6 +61,7 @@ const useGameLogic = () => {
 
     const newCellValues = [...cellValues];
     const newIndexQueue = [...indexQueue];
+    const newTimeLimit = Math.max(MIN_TIME_LIMIT, timeLimit - TIME_LIMIT_DECREMENT * !xIsNext);
 
     newIndexQueue.push(index);
 
@@ -74,7 +77,8 @@ const useGameLogic = () => {
     setIndexQueue(newIndexQueue);
     setIsXNext((prev) => !prev);
     setShepardToneIndex((prev) => (prev === shepardTone.length - 1 ? 0 : prev + 1));
-    setTimeRemaining(timeLimit);
+    setTimeRemaining(newTimeLimit);
+    setTimeLimit(newTimeLimit);
   };
 
   const nextCellToBeReset =
