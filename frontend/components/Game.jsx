@@ -9,10 +9,10 @@ const Game = () => {
   return (
     <div>
       <p>Round {round}</p>
-      {gameStatus === GameStatus.ONGOING && <div className="status">{timeRemaining / 1000}</div>}
-      {gameStatus === GameStatus.X_WON && <div className="status">X has won!</div>}
-      {gameStatus === GameStatus.O_WON && <div className="status">O has won!</div>}
-      {gameStatus === GameStatus.DRAW && <div className="status">Draw!</div>}
+      {gameStatus === GameStatus.ONGOING && <p>{timeRemaining / 1000}</p>}
+      {gameStatus === GameStatus.X_WON && <p>X has won!</p>}
+      {gameStatus === GameStatus.O_WON && <p>O has won!</p>}
+      {gameStatus === GameStatus.DRAW && <p>Draw!</p>}
 
       <Grid
         cellValues={cellValues}
