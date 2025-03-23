@@ -1,4 +1,5 @@
 import getWinner from './getWinner';
+import applyMoveAt from './applyMoveAt';
 
 const CUTOFF_DEPTH = 3;
 const X_WIN_UTILITY = -1;
@@ -36,12 +37,7 @@ const max_value = (cellValues, indexQueue, cutoffDepth) => {
     const newCellValues = [...cellValues];
     const newIndexQueue = [...indexQueue];
 
-    newCellValues[move] = 'O';
-    newIndexQueue.push(move);
-
-    if (newIndexQueue.length > 6) {
-      newCellValues[newIndexQueue.shift()] = null;
-    }
+    applyMoveAt(move, newCellValues, newIndexQueue, false);
 
     return { move, utility: min_value(newCellValues, newIndexQueue, cutoffDepth - 1).utility };
   });
@@ -74,12 +70,7 @@ const min_value = (cellValues, indexQueue, cutoffDepth) => {
     const newCellValues = [...cellValues];
     const newIndexQueue = [...indexQueue];
 
-    newCellValues[move] = 'X';
-    newIndexQueue.push(move);
-
-    if (newIndexQueue.length > 6) {
-      newCellValues[newIndexQueue.shift()] = null;
-    }
+    applyMoveAt(move, newCellValues, newIndexQueue, true);
 
     return { move, utility: max_value(newCellValues, newIndexQueue, cutoffDepth - 1).utility };
   });

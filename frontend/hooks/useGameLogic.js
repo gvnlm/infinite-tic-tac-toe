@@ -4,6 +4,7 @@ import useShepardTones from './useShepardTones';
 import GameStatus from '../constants/gameStatus';
 import getWinner from '../utils/getWinner';
 import getBestMove from '../utils/getBestMove';
+import applyMoveAt from '../utils/applyMoveAt';
 
 const INITIAL_TIME_LIMIT = 10_000;
 const MIN_TIME_LIMIT = 3_000;
@@ -60,13 +61,7 @@ const useGameLogic = () => {
     const newIndexQueue = [...indexQueue];
     const newTimeLimit = Math.max(MIN_TIME_LIMIT, timeLimit - TIME_LIMIT_DECREMENT * !xIsNext);
 
-    newIndexQueue.push(index);
-
-    if (newIndexQueue.length > 6) {
-      newCellValues[newIndexQueue.shift()] = null;
-    }
-
-    newCellValues[index] = xIsNext ? 'X' : 'O';
+    applyMoveAt(index, newCellValues, newIndexQueue, xIsNext);
 
     setGameStatus(getGameStatus(newCellValues));
     setRound((prev) => prev + !xIsNext);
