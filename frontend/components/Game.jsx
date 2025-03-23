@@ -3,7 +3,7 @@ import useGameLogic from '../hooks/useGameLogic';
 import GameStatus from '../constants/gameStatus';
 
 const Game = () => {
-  const [gameStatus, round, cellValues, nextCellToBeReset, handleCellClickAt, timeRemaining] =
+  const [gameStatus, round, cellValues, nextCellsToBeReset, handleCellClickAt, timeRemaining] =
     useGameLogic();
 
   return (
@@ -16,7 +16,7 @@ const Game = () => {
 
       <Grid
         cellValues={cellValues}
-        nextCellToBeReset={nextCellToBeReset}
+        nextCellsToBeReset={nextCellsToBeReset}
         onCellClickAt={handleCellClickAt}
       />
     </div>
