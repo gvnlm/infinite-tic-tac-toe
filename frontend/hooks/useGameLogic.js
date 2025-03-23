@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
+
 import GameStatus from '../constants/gameStatus';
+import getWinner from '../utils/getWinner';
+import getBestMove from '../utils/getBestMove';
 
 const shepardTone = [
   new Audio('/shepard-tone/1.mp3'),
@@ -20,12 +23,6 @@ const INITIAL_TIME_LIMIT = 10_000;
 const MIN_TIME_LIMIT = 3_000;
 const TIME_LIMIT_DECREMENT = 500;
 const COUNTDOWN_INTERVAL = 100;
-
-// Minimax constants
-const CUTOFF_DEPTH = 3;
-const X_WIN_UTILITY = -1;
-const O_WIN_UTILITY = 1;
-const CUTOFF_UTILITY = 0;
 
 const useGameLogic = () => {
   const [gameStatus, setGameStatus] = useState(GameStatus.ONGOING);
@@ -112,118 +109,6 @@ const getGameStatus = (cellValues) => {
   } else {
     return GameStatus.DRAW;
   }
-};
-
-const getWinner = (cellValues) => {
-  const lines = [
-    // Rows
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    // Columns
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    // Diagonals
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for (let [a, b, c] of lines) {
-    if (
-      cellValues[a] !== null &&
-      cellValues[a] === cellValues[b] &&
-      cellValues[b] === cellValues[c]
-    ) {
-      return cellValues[a];
-    }
-  }
-
-  return null;
-};
-
-const getBestMove = (cellValues, indexQueue, xIsNext) => {
-  if (xIsNext) {
-    return min_value(cellValues, indexQueue, CUTOFF_DEPTH).move;
-  } else {
-    return max_value(cellValues, indexQueue, CUTOFF_DEPTH).move;
-  }
-};
-
-const max_value = (cellValues, indexQueue, cutoffDepth) => {
-  if (cutoffDepth <= 0) {
-    return { move: null, utility: CUTOFF_UTILITY };
-  }
-
-  const winner = getWinner(cellValues);
-
-  if (winner === 'O') {
-    return { move: null, utility: O_WIN_UTILITY };
-  }
-
-  if (winner === 'X') {
-    return { move: null, utility: X_WIN_UTILITY };
-  }
-
-  const moves = cellValues
-    .map((cellValue, index) => (cellValue === null ? index : null))
-    .filter((index) => index !== null);
-
-  const moveUtilityPairs = moves.map((move) => {
-    const newCellValues = [...cellValues];
-    const newIndexQueue = [...indexQueue];
-
-    newCellValues[move] = 'O';
-    newIndexQueue.push(move);
-
-    if (newIndexQueue.length > 6) {
-      newCellValues[newIndexQueue.shift()] = null;
-    }
-
-    return { move, utility: min_value(newCellValues, newIndexQueue, cutoffDepth - 1).utility };
-  });
-
-  return moveUtilityPairs.reduce((maxMoveUtilityPair, moveUtilityPair) =>
-    moveUtilityPair.utility > maxMoveUtilityPair.utility ? moveUtilityPair : maxMoveUtilityPair
-  );
-};
-
-const min_value = (cellValues, indexQueue, cutoffDepth) => {
-  if (cutoffDepth <= 0) {
-    return { move: null, utility: CUTOFF_UTILITY };
-  }
-
-  const winner = getWinner(cellValues);
-
-  if (winner === 'O') {
-    return { move: null, utility: O_WIN_UTILITY };
-  }
-
-  if (winner === 'X') {
-    return { move: null, utility: X_WIN_UTILITY };
-  }
-
-  const moves = cellValues
-    .map((cellValue, index) => (cellValue === null ? index : null))
-    .filter((index) => index !== null);
-
-  const moveUtilityPairs = moves.map((move) => {
-    const newCellValues = [...cellValues];
-    const newIndexQueue = [...indexQueue];
-
-    newCellValues[move] = 'X';
-    newIndexQueue.push(move);
-
-    if (newIndexQueue.length > 6) {
-      newCellValues[newIndexQueue.shift()] = null;
-    }
-
-    return { move, utility: max_value(newCellValues, newIndexQueue, cutoffDepth - 1).utility };
-  });
-
-  return moveUtilityPairs.reduce((minMoveUtilityPair, moveUtilityPair) =>
-    moveUtilityPair.utility < minMoveUtilityPair.utility ? moveUtilityPair : minMoveUtilityPair
-  );
 };
 
 export default useGameLogic;
