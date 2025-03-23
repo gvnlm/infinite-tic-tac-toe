@@ -1,23 +1,9 @@
 import { useState, useEffect } from 'react';
 
+import useShepardTones from './useShepardTones';
 import GameStatus from '../constants/gameStatus';
 import getWinner from '../utils/getWinner';
 import getBestMove from '../utils/getBestMove';
-
-const shepardTone = [
-  new Audio('/shepard-tone/1.mp3'),
-  new Audio('/shepard-tone/2.mp3'),
-  new Audio('/shepard-tone/3.mp3'),
-  new Audio('/shepard-tone/4.mp3'),
-  new Audio('/shepard-tone/5.mp3'),
-  new Audio('/shepard-tone/6.mp3'),
-  new Audio('/shepard-tone/7.mp3'),
-  new Audio('/shepard-tone/8.mp3'),
-  new Audio('/shepard-tone/9.mp3'),
-  new Audio('/shepard-tone/10.mp3'),
-  new Audio('/shepard-tone/11.mp3'),
-  new Audio('/shepard-tone/12.mp3'),
-];
 
 const INITIAL_TIME_LIMIT = 10_000;
 const MIN_TIME_LIMIT = 3_000;
@@ -30,9 +16,10 @@ const useGameLogic = () => {
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
   const [indexQueue, setIndexQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
-  const [shepardToneIndex, setShepardToneIndex] = useState(0);
   const [timeLimit, setTimeLimit] = useState(INITIAL_TIME_LIMIT);
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+
+  const [playNextShepardTone] = useShepardTones();
 
   // Handle countdown
   useEffect(() => {
@@ -67,7 +54,7 @@ const useGameLogic = () => {
       return;
     }
 
-    shepardTone[shepardToneIndex].play();
+    playNextShepardTone();
 
     const newCellValues = [...cellValues];
     const newIndexQueue = [...indexQueue];
@@ -86,7 +73,6 @@ const useGameLogic = () => {
     setCellValues(newCellValues);
     setIndexQueue(newIndexQueue);
     setIsXNext((prev) => !prev);
-    setShepardToneIndex((prev) => (prev === shepardTone.length - 1 ? 0 : prev + 1));
     setTimeRemaining(newTimeLimit);
     setTimeLimit(newTimeLimit);
   };
