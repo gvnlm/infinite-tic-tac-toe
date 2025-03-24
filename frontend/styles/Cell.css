@@ -10,6 +10,16 @@
   background-color: powderblue;
 }
 
+.unoccupied.x-is-next:hover::after {
+  content: 'X';
+  opacity: 0.15;
+}
+
+.unoccupied.o-is-next:hover::after {
+  content: 'O';
+  opacity: 0.15;
+}
+
 @keyframes flash {
   0% {
     opacity: 1;

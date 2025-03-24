@@ -80,7 +80,15 @@ const useGameLogic = () => {
   const nextCellsToBeReset =
     gameStatus === GameStatus.ONGOING && indexQueue.length === 6 ? indexQueue.slice(0, 2) : null;
 
-  return [gameStatus, round, cellValues, nextCellsToBeReset, handleCellClickAt, timeRemaining];
+  return [
+    gameStatus,
+    round,
+    cellValues,
+    nextCellsToBeReset,
+    handleCellClickAt,
+    timeRemaining,
+    xIsNext,
+  ];
 };
 
 const getGameStatus = (cellValues) => {

@@ -3,8 +3,15 @@ import useGameLogic from '../hooks/useGameLogic';
 import GameStatus from '../constants/gameStatus';
 
 const Game = () => {
-  const [gameStatus, round, cellValues, nextCellsToBeReset, handleCellClickAt, timeRemaining] =
-    useGameLogic();
+  const [
+    gameStatus,
+    round,
+    cellValues,
+    nextCellsToBeReset,
+    handleCellClickAt,
+    timeRemaining,
+    xIsNext,
+  ] = useGameLogic();
 
   return (
     <div>
@@ -18,6 +25,7 @@ const Game = () => {
         cellValues={cellValues}
         nextCellsToBeReset={nextCellsToBeReset}
         onCellClickAt={handleCellClickAt}
+        xIsNext={xIsNext}
       />
     </div>
   );
