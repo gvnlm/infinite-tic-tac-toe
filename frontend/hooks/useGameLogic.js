@@ -6,9 +6,8 @@ import getWinner from '../utils/getWinner';
 import getBestMove from '../utils/getBestMove';
 import applyMoveAt from '../utils/applyMoveAt';
 
-const INITIAL_TIME_LIMIT = 10_000;
-const MIN_TIME_LIMIT = 3_000;
-const TIME_LIMIT_DECREMENT = 500;
+const TIME_LIMIT = 30_000;
+const MIN_TIME_REMAINING = 2_500;
 const COUNTDOWN_INTERVAL = 100;
 
 const useGameLogic = () => {
@@ -17,8 +16,9 @@ const useGameLogic = () => {
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
   const [indexQueue, setIndexQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
-  const [timeLimit, setTimeLimit] = useState(INITIAL_TIME_LIMIT);
-  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+  const [xTimeRemaining, setXTimeRemaining] = useState(TIME_LIMIT);
+  const [oTimeRemaining, setOTimeRemaining] = useState(TIME_LIMIT);
+  const [timeRemaining, setTimeRemaining] = useState(xTimeRemaining);
 
   const [playNextShepardTone] = useShepardTones();
 
@@ -59,17 +59,22 @@ const useGameLogic = () => {
 
     const newCellValues = [...cellValues];
     const newIndexQueue = [...indexQueue];
-    const newTimeLimit = Math.max(MIN_TIME_LIMIT, timeLimit - TIME_LIMIT_DECREMENT * !xIsNext);
 
     applyMoveAt(index, newCellValues, newIndexQueue, xIsNext);
+
+    if (xIsNext) {
+      setXTimeRemaining(Math.max(timeRemaining, MIN_TIME_REMAINING));
+      setTimeRemaining(oTimeRemaining);
+    } else {
+      setOTimeRemaining(Math.max(timeRemaining, MIN_TIME_REMAINING));
+      setTimeRemaining(xTimeRemaining);
+    }
 
     setGameStatus(getGameStatus(newCellValues));
     setRound((prev) => prev + !xIsNext);
     setCellValues(newCellValues);
     setIndexQueue(newIndexQueue);
     setIsXNext((prev) => !prev);
-    setTimeRemaining(newTimeLimit);
-    setTimeLimit(newTimeLimit);
   };
 
   const nextCellsToBeReset =
