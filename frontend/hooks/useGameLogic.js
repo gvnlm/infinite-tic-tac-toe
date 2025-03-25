@@ -38,11 +38,11 @@ const useGameLogic = () => {
   }, [timeRemaining, xIsNext]);
 
   // Let AI pick O's move
-  useEffect(() => {
-    if (!xIsNext) {
-      handleCellClickAt(getBestMove(cellValues, indexQueue, xIsNext))();
-    }
-  }, [xIsNext]);
+  // useEffect(() => {
+  //   if (!xIsNext) {
+  //     handleCellClickAt(getBestMove(cellValues, indexQueue, xIsNext))();
+  //   }
+  // }, [xIsNext]);
 
   const handleCellClickAt = (index) => () => {
     // If game over
