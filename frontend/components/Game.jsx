@@ -1,30 +1,42 @@
 import Grid from './Grid';
+import CountdownBar from './CountdownBar';
 import useGameLogic from '../hooks/useGameLogic';
 import GameStatus from '../constants/gameStatus';
 
 import '../styles/Game.css';
 
 const Game = () => {
-  const [gameStatus, round, cellValues, moveQueue, xIsNext, timeRemaining, handleCellClickAt] =
-    useGameLogic();
+  const [
+    gameStatus,
+    round,
+    cellValues,
+    moveQueue,
+    xIsNext,
+    xTimeRemainingPercent,
+    oTimeRemainingPercent,
+    handleCellClickAt,
+  ] = useGameLogic();
 
   return (
     <div className="game">
       <div className="header">
         <p>Round {round}</p>
-        {gameStatus === GameStatus.ONGOING && <p>{timeRemaining / 1000}</p>}
         {gameStatus === GameStatus.X_WON && <p>X has won!</p>}
         {gameStatus === GameStatus.O_WON && <p>O has won!</p>}
         {gameStatus === GameStatus.DRAW && <p>Draw!</p>}
       </div>
 
       <div className="body">
+        <CountdownBar remainingPercent={xTimeRemainingPercent} />
+
         <Grid
           cellValues={cellValues}
           moveQueue={moveQueue}
           onCellClickAt={handleCellClickAt}
           xIsNext={xIsNext}
         />
+
+        <CountdownBar remainingPercent={oTimeRemainingPercent} />
       </div>
 
       <div className="footer">Footer placeholder</div>

@@ -6,9 +6,9 @@ import getWinner from '../utils/getWinner';
 import getBestMove from '../utils/getBestMove';
 import applyMoveAt from '../utils/applyMoveAt';
 
-const TIME_LIMIT = 30_000;
+const TIME_LIMIT = 10_000;
 const MIN_TIME_REMAINING = 2_500;
-const COUNTDOWN_INTERVAL = 100;
+const COUNTDOWN_INTERVAL = 20;
 
 const useGameLogic = () => {
   const [gameStatus, setGameStatus] = useState(GameStatus.ONGOING);
@@ -18,12 +18,19 @@ const useGameLogic = () => {
   const [xIsNext, setIsXNext] = useState(true);
   const [xTimeRemaining, setXTimeRemaining] = useState(TIME_LIMIT);
   const [oTimeRemaining, setOTimeRemaining] = useState(TIME_LIMIT);
-  const [timeRemaining, setTimeRemaining] = useState(xTimeRemaining);
 
   const [playNextShepardTone] = useShepardTones();
 
   // Handle countdown
   useEffect(() => {
+    // Stop countdown when game over
+    if (gameStatus !== GameStatus.ONGOING) {
+      return;
+    }
+
+    const timeRemaining = xIsNext ? xTimeRemaining : oTimeRemaining;
+    const setTimeRemaining = xIsNext ? setXTimeRemaining : setOTimeRemaining;
+
     if (timeRemaining <= 0) {
       setGameStatus(xIsNext ? GameStatus.O_WON : GameStatus.X_WON);
       return;
@@ -35,7 +42,7 @@ const useGameLogic = () => {
 
     // On effect re-runs, clear previous timeout
     return () => clearTimeout(timeoutId);
-  }, [timeRemaining, xIsNext]);
+  }, [xTimeRemaining, oTimeRemaining, xIsNext]);
 
   // Let AI pick O's move
   // useEffect(() => {
@@ -63,11 +70,9 @@ const useGameLogic = () => {
     applyMoveAt(index, newCellValues, newMoveQueue, xIsNext);
 
     if (xIsNext) {
-      setXTimeRemaining(Math.max(timeRemaining, MIN_TIME_REMAINING));
-      setTimeRemaining(oTimeRemaining);
+      setXTimeRemaining(Math.max(xTimeRemaining, MIN_TIME_REMAINING));
     } else {
-      setOTimeRemaining(Math.max(timeRemaining, MIN_TIME_REMAINING));
-      setTimeRemaining(xTimeRemaining);
+      setOTimeRemaining(Math.max(oTimeRemaining, MIN_TIME_REMAINING));
     }
 
     setGameStatus(getGameStatus(newCellValues));
@@ -77,7 +82,16 @@ const useGameLogic = () => {
     setIsXNext((prev) => !prev);
   };
 
-  return [gameStatus, round, cellValues, moveQueue, xIsNext, timeRemaining, handleCellClickAt];
+  return [
+    gameStatus,
+    round,
+    cellValues,
+    moveQueue,
+    xIsNext,
+    (100 * xTimeRemaining) / TIME_LIMIT, // xTimeRemainingPercent
+    (100 * oTimeRemaining) / TIME_LIMIT, // oTimeRemainingPercent
+    handleCellClickAt,
+  ];
 };
 
 const getGameStatus = (cellValues) => {
