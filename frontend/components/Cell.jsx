@@ -1,6 +1,6 @@
 import '../styles/Cell.css';
 
-const Cell = ({ value, onCellClick, isNextToBeReset, xIsNext }) => {
+const Cell = ({ value, valueSize, isNextToReset, onCellClick, xIsNext }) => {
   return (
     <button
       className={`cell ${value !== null ? 'occupied' : 'unoccupied'} ${
@@ -8,7 +8,12 @@ const Cell = ({ value, onCellClick, isNextToBeReset, xIsNext }) => {
       }`}
       onClick={onCellClick}
     >
-      <span className={isNextToBeReset ? 'is-next-to-be-reset ' : ''}>{value}</span>
+      <span
+        className={`value ${isNextToReset ? 'is-next-to-reset' : ''}`}
+        style={{ fontSize: valueSize }}
+      >
+        {value}
+      </span>
     </button>
   );
 };

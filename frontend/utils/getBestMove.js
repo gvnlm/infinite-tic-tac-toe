@@ -6,15 +6,15 @@ const X_WIN_UTILITY = -1;
 const O_WIN_UTILITY = 1;
 const CUTOFF_UTILITY = 0;
 
-const getBestMove = (cellValues, indexQueue, xIsNext) => {
+const getBestMove = (cellValues, moveQueue, xIsNext) => {
   if (xIsNext) {
-    return min_value(cellValues, indexQueue, CUTOFF_DEPTH).move;
+    return min_value(cellValues, moveQueue, CUTOFF_DEPTH).move;
   } else {
-    return max_value(cellValues, indexQueue, CUTOFF_DEPTH).move;
+    return max_value(cellValues, moveQueue, CUTOFF_DEPTH).move;
   }
 };
 
-const max_value = (cellValues, indexQueue, cutoffDepth) => {
+const max_value = (cellValues, moveQueue, cutoffDepth) => {
   if (cutoffDepth <= 0) {
     return { move: null, utility: CUTOFF_UTILITY };
   }
@@ -35,11 +35,11 @@ const max_value = (cellValues, indexQueue, cutoffDepth) => {
 
   const moveUtilityPairs = moves.map((move) => {
     const newCellValues = [...cellValues];
-    const newIndexQueue = [...indexQueue];
+    const newMoveQueue = [...moveQueue];
 
-    applyMoveAt(move, newCellValues, newIndexQueue, false);
+    applyMoveAt(move, newCellValues, newMoveQueue, false);
 
-    return { move, utility: min_value(newCellValues, newIndexQueue, cutoffDepth - 1).utility };
+    return { move, utility: min_value(newCellValues, newMoveQueue, cutoffDepth - 1).utility };
   });
 
   return moveUtilityPairs.reduce((maxMoveUtilityPair, moveUtilityPair) =>
@@ -47,7 +47,7 @@ const max_value = (cellValues, indexQueue, cutoffDepth) => {
   );
 };
 
-const min_value = (cellValues, indexQueue, cutoffDepth) => {
+const min_value = (cellValues, moveQueue, cutoffDepth) => {
   if (cutoffDepth <= 0) {
     return { move: null, utility: CUTOFF_UTILITY };
   }
@@ -68,11 +68,11 @@ const min_value = (cellValues, indexQueue, cutoffDepth) => {
 
   const moveUtilityPairs = moves.map((move) => {
     const newCellValues = [...cellValues];
-    const newIndexQueue = [...indexQueue];
+    const newMoveQueue = [...moveQueue];
 
-    applyMoveAt(move, newCellValues, newIndexQueue, true);
+    applyMoveAt(move, newCellValues, newMoveQueue, true);
 
-    return { move, utility: max_value(newCellValues, newIndexQueue, cutoffDepth - 1).utility };
+    return { move, utility: max_value(newCellValues, newMoveQueue, cutoffDepth - 1).utility };
   });
 
   return moveUtilityPairs.reduce((minMoveUtilityPair, moveUtilityPair) =>

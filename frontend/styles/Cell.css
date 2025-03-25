@@ -1,4 +1,7 @@
 .cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   float: left;
   border: 2px solid black;
   width: 100px;
@@ -32,6 +35,10 @@
   }
 }
 
-.is-next-to-be-reset {
+.cell .is-next-to-reset {
   animation: flash 1s infinite;
+}
+
+.cell .value {
+  transition: font-size 0.1s ease-in-out;
 }

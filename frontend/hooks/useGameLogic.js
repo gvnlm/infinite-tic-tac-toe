@@ -14,7 +14,7 @@ const useGameLogic = () => {
   const [gameStatus, setGameStatus] = useState(GameStatus.ONGOING);
   const [round, setRound] = useState(1);
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
-  const [indexQueue, setIndexQueue] = useState([]);
+  const [moveQueue, setMoveQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
   const [xTimeRemaining, setXTimeRemaining] = useState(TIME_LIMIT);
   const [oTimeRemaining, setOTimeRemaining] = useState(TIME_LIMIT);
@@ -40,7 +40,7 @@ const useGameLogic = () => {
   // Let AI pick O's move
   // useEffect(() => {
   //   if (!xIsNext) {
-  //     handleCellClickAt(getBestMove(cellValues, indexQueue, xIsNext))();
+  //     handleCellClickAt(getBestMove(cellValues, moveQueue, xIsNext))();
   //   }
   // }, [xIsNext]);
 
@@ -58,9 +58,9 @@ const useGameLogic = () => {
     playNextShepardTone();
 
     const newCellValues = [...cellValues];
-    const newIndexQueue = [...indexQueue];
+    const newMoveQueue = [...moveQueue];
 
-    applyMoveAt(index, newCellValues, newIndexQueue, xIsNext);
+    applyMoveAt(index, newCellValues, newMoveQueue, xIsNext);
 
     if (xIsNext) {
       setXTimeRemaining(Math.max(timeRemaining, MIN_TIME_REMAINING));
@@ -73,22 +73,11 @@ const useGameLogic = () => {
     setGameStatus(getGameStatus(newCellValues));
     setRound((prev) => prev + !xIsNext);
     setCellValues(newCellValues);
-    setIndexQueue(newIndexQueue);
+    setMoveQueue(newMoveQueue);
     setIsXNext((prev) => !prev);
   };
 
-  const nextCellsToBeReset =
-    gameStatus === GameStatus.ONGOING && indexQueue.length === 6 ? indexQueue.slice(0, 2) : null;
-
-  return [
-    gameStatus,
-    round,
-    cellValues,
-    nextCellsToBeReset,
-    handleCellClickAt,
-    timeRemaining,
-    xIsNext,
-  ];
+  return [gameStatus, round, cellValues, moveQueue, xIsNext, timeRemaining, handleCellClickAt];
 };
 
 const getGameStatus = (cellValues) => {
