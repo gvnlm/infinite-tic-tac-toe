@@ -3,4 +3,10 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: rgb(20, 20, 20);
+  color: white;
+}
+
+.app * {
+  color: white;
 }

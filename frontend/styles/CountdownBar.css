@@ -1,7 +1,7 @@
 .countdown-bar {
   width: 20px;
   height: 100%;
-  border: 2px solid black;
+  border: 2px solid white;
   border-radius: 20px;
   display: flex;
   align-items: flex-end;
