@@ -1,5 +1,24 @@
-.grid .row:after {
-  clear: both;
-  content: '';
-  display: table;
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+  height: 400px;
+}
+
+/* Tic-Tac-Toe vertical lines */
+.grid > * {
+  box-sizing: border-box;
+  border-right: 2px solid black;
+}
+.grid > *:nth-child(3n) {
+  border-right: none;
+}
+
+/* Tic-Tac-Toe horizontal lines */
+.grid > * {
+  box-sizing: border-box;
+  border-bottom: 2px solid black;
+}
+.grid > *:nth-last-child(-n + 3) {
+  border-bottom: none;
 }

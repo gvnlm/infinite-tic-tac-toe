@@ -16,27 +16,20 @@ const Grid = ({ cellValues, moveQueue, onCellClickAt, xIsNext }) => {
     return `${100 - valueAge * VALUE_SHRINK_PERCENTAGE}%`;
   };
 
-  const renderRow = (row) => (
-    <div key={row} className="row">
-      {[0, 1, 2].map((col) => {
-        const index = row * 3 + col;
-        return (
-          <Cell
-            key={index}
-            value={cellValues[index]}
-            valueSize={getValueSizeAt(index, moveQueue)}
-            isNextToReset={moveQueue.length === 6 && moveQueue[0] === index}
-            onCellClick={onCellClickAt(index)}
-            xIsNext={xIsNext}
-          />
-        );
-      })}
+  return (
+    <div className="grid">
+      {cellValues.map((cellValue, index) => (
+        <Cell
+          key={index}
+          value={cellValue}
+          valueSize={getValueSizeAt(index, moveQueue)}
+          isNextToReset={moveQueue.length === 6 && moveQueue[0] === index}
+          onCellClick={onCellClickAt(index)}
+          xIsNext={xIsNext}
+        />
+      ))}
     </div>
   );
-
-  const renderGrid = () => [0, 1, 2].map((row) => renderRow(row));
-
-  return <div className="grid">{renderGrid()}</div>;
 };
 
 export default Grid;
