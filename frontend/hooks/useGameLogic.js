@@ -7,7 +7,6 @@ import getBestMove from '../utils/getBestMove';
 import applyMoveAt from '../utils/applyMoveAt';
 
 const TIME_LIMIT = 10_000;
-const MIN_TIME_REMAINING = 2_500;
 const COUNTDOWN_INTERVAL = 20;
 
 const useGameLogic = () => {
@@ -68,12 +67,6 @@ const useGameLogic = () => {
     const newMoveQueue = [...moveQueue];
 
     applyMoveAt(index, newCellValues, newMoveQueue, xIsNext);
-
-    if (xIsNext) {
-      setXTimeRemaining(Math.max(xTimeRemaining, MIN_TIME_REMAINING));
-    } else {
-      setOTimeRemaining(Math.max(oTimeRemaining, MIN_TIME_REMAINING));
-    }
 
     setGameStatus(getGameStatus(newCellValues));
     setRound((prev) => prev + !xIsNext);
