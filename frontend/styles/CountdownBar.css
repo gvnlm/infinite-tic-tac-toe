@@ -1,15 +1,14 @@
 .countdown-bar {
   width: 20px;
   height: 100%;
-  border: 2px solid white;
   border-radius: 20px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
 .countdown-bar .remaining {
   width: inherit;
+  border-radius: inherit;
   background-color: lightcoral;
 }
