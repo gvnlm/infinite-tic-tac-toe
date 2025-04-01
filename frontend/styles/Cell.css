@@ -19,6 +19,22 @@
   opacity: 0.15;
 }
 
+@keyframes spawn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cell .value {
+  animation: spawn 0.25s cubic-bezier(0.15, 0.9, 0.3, 1.25) forwards;
+  transition: width 0.1s ease-in-out, height 0.1s ease-in-out;
+}
+
 @keyframes flash {
   0% {
     opacity: 1;
@@ -33,8 +49,4 @@
 
 .cell .is-next-to-reset {
   animation: flash 1s infinite;
-}
-
-.cell .value {
-  transition: width 0.1s ease-in-out, height 0.1s ease-in-out;
 }

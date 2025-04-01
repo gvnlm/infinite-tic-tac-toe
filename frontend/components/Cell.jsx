@@ -5,12 +5,7 @@ import '../styles/Cell.css';
 
 const Cell = ({ value, valueSize, isNextToReset, onCellClick, xIsNext }) => {
   return (
-    <button
-      className={`cell ${value !== null ? 'occupied' : 'unoccupied'} ${
-        xIsNext ? 'x-is-next' : 'o-is-next'
-      }`}
-      onClick={onCellClick}
-    >
+    <button className="cell" onClick={onCellClick}>
       {value === 'X' && (
         <Cross
           className={`value ${isNextToReset ? 'is-next-to-reset' : ''}`}
@@ -26,7 +21,7 @@ const Cell = ({ value, valueSize, isNextToReset, onCellClick, xIsNext }) => {
       )}
 
       {value === null &&
-        (xIsNext ? <Cross className={`placeholder`} /> : <Circle className={`placeholder`} />)}
+        (xIsNext ? <Cross className="placeholder" /> : <Circle className="placeholder" />)}
     </button>
   );
 };
