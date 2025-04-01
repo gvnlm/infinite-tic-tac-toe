@@ -3,7 +3,7 @@ import Cross from './Cross';
 
 import '../styles/Cell.css';
 
-const Cell = ({ value, valueSize, isNextToReset, onCellClick, xIsNext }) => {
+const Cell = ({ value, valueSize, onCellClick, xIsNext, isNextToReset, isResetting }) => {
   return (
     <button className="cell" onClick={onCellClick}>
       {value === 'X' && (
@@ -21,7 +21,17 @@ const Cell = ({ value, valueSize, isNextToReset, onCellClick, xIsNext }) => {
       )}
 
       {value === null &&
-        (xIsNext ? <Cross className="placeholder" /> : <Circle className="placeholder" />)}
+        (!isResetting ? (
+          xIsNext ? (
+            <Cross className="placeholder" />
+          ) : (
+            <Circle className="placeholder" />
+          )
+        ) : xIsNext ? (
+          <Circle className="is-despawning" />
+        ) : (
+          <Cross className="is-despawning" />
+        ))}
     </button>
   );
 };

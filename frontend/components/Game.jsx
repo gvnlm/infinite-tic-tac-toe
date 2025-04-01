@@ -14,6 +14,7 @@ const Game = () => {
     xIsNext,
     xTimeRemainingPercent,
     oTimeRemainingPercent,
+    resettingCellIndex,
     handleCellClickAt,
   ] = useGameLogic();
 
@@ -34,6 +35,7 @@ const Game = () => {
           moveQueue={moveQueue}
           onCellClickAt={handleCellClickAt}
           xIsNext={xIsNext}
+          resettingCellIndex={resettingCellIndex}
         />
 
         <CountdownBar remainingPercent={oTimeRemainingPercent} />

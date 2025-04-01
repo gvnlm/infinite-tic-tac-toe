@@ -50,3 +50,22 @@
 .cell .is-next-to-reset {
   animation: flash 1s infinite;
 }
+
+@keyframes despawn {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.cell .is-despawning {
+  width: 37.5%;
+  height: 37.5%;
+
+  /* Duration slightly longer than timeout duration (useGameLogic.js) to ensure animation does not complete before timeout */
+  animation: despawn 0.2s ease-out;
+}

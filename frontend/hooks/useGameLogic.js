@@ -8,6 +8,8 @@ import applyMoveAt from '../utils/applyMoveAt';
 
 const TIME_LIMIT = 10_000;
 const COUNTDOWN_INTERVAL = 20;
+// Slightly shorter than despawn animation duration (Cell.css) to ensure animation does not complete before timeout
+const RESETTING_CELL_DURATION = 180;
 
 const useGameLogic = () => {
   const [gameStatus, setGameStatus] = useState(GameStatus.ONGOING);
@@ -17,6 +19,8 @@ const useGameLogic = () => {
   const [xIsNext, setIsXNext] = useState(true);
   const [xTimeRemaining, setXTimeRemaining] = useState(TIME_LIMIT);
   const [oTimeRemaining, setOTimeRemaining] = useState(TIME_LIMIT);
+  // Index of cell whose value is current despawning
+  const [resettingCellIndex, setResettingCellIndex] = useState(null);
 
   const [playNextShepardTone] = useShepardTones();
 
@@ -66,6 +70,14 @@ const useGameLogic = () => {
     const newCellValues = [...cellValues];
     const newMoveQueue = [...moveQueue];
 
+    if (moveQueue.length >= 6) {
+      setResettingCellIndex(moveQueue[0]);
+
+      setTimeout(() => {
+        setResettingCellIndex(null);
+      }, RESETTING_CELL_DURATION);
+    }
+
     applyMoveAt(index, newCellValues, newMoveQueue, xIsNext);
 
     setGameStatus(getGameStatus(newCellValues));
@@ -83,6 +95,7 @@ const useGameLogic = () => {
     xIsNext,
     (100 * xTimeRemaining) / TIME_LIMIT, // xTimeRemainingPercent
     (100 * oTimeRemaining) / TIME_LIMIT, // oTimeRemainingPercent
+    resettingCellIndex,
     handleCellClickAt,
   ];
 };
