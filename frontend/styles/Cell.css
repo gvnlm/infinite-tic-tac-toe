@@ -9,13 +9,13 @@
   background-color: inherit;
 }
 
-.unoccupied.x-is-next:hover::after {
-  content: 'X';
-  opacity: 0.15;
+.cell .placeholder {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
 
-.unoccupied.o-is-next:hover::after {
-  content: 'O';
+.cell .placeholder:hover {
   opacity: 0.15;
 }
 
@@ -36,5 +36,5 @@
 }
 
 .cell .value {
-  transition: font-size 0.1s ease-in-out;
+  transition: width 0.1s ease-in-out, height 0.1s ease-in-out;
 }
