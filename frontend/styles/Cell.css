@@ -14,10 +14,12 @@
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  filter: drop-shadow(0 0 0.15vw rgb(100, 100, 100)) drop-shadow(0 0 0.3vw rgb(100, 100, 100));
+  transition: opacity 0.1s linear;
 }
 
 .cell .placeholder:hover {
-  opacity: 0.15;
+  opacity: 0.1;
 }
 
 @keyframes spawn {
