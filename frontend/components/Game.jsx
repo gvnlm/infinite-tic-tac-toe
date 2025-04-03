@@ -12,6 +12,8 @@ const Game = () => {
     cellValues,
     moveQueue,
     xIsNext,
+    xTimeRemaining,
+    oTimeRemaining,
     xTimeRemainingPercent,
     oTimeRemainingPercent,
     resettingCellIndex,
@@ -28,7 +30,11 @@ const Game = () => {
       </div>
 
       <div className="body">
-        <CountdownBar remainingPercent={xTimeRemainingPercent} />
+        <CountdownBar
+          timeRemaining={xTimeRemaining}
+          percentRemaining={xTimeRemainingPercent}
+          side="left"
+        />
 
         <Grid
           cellValues={cellValues}
@@ -38,7 +44,11 @@ const Game = () => {
           resettingCellIndex={resettingCellIndex}
         />
 
-        <CountdownBar remainingPercent={oTimeRemainingPercent} />
+        <CountdownBar
+          timeRemaining={oTimeRemaining}
+          percentRemaining={oTimeRemainingPercent}
+          side="right"
+        />
       </div>
 
       <div className="footer">Footer placeholder</div>

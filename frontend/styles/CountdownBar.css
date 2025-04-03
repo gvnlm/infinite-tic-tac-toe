@@ -1,13 +1,23 @@
 .countdown-bar {
-  width: 20px;
   height: 100%;
   border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
 
-.countdown-bar .remaining {
-  width: inherit;
+.countdown-bar .percent-remaining {
+  width: 20px;
   border-radius: inherit;
+  /* Ensure glow effect overlays the timer */
+  z-index: 1;
+}
+
+.countdown-bar .right.timer {
+  text-align: right;
+}
+
+.countdown-bar .timer {
+  width: 2rem;
 }

@@ -1,6 +1,6 @@
 import '../styles/CountdownBar.css';
 
-const CountdownBar = ({ remainingPercent }) => {
+const CountdownBar = ({ timeRemaining, percentRemaining, side }) => {
   const getBoxShadow = () => {
     return `
       0 0 0.1vw ${getColour()},
@@ -16,20 +16,26 @@ const CountdownBar = ({ remainingPercent }) => {
   };
 
   const getColour = () => {
-    const hue = 120 * (remainingPercent / 100);
+    const hue = 120 * (percentRemaining / 100);
     return `hsl(${hue}, 80%, 50%)`;
   };
 
+  const secondsRemaining = (timeRemaining / 1000).toFixed(2);
+
   return (
     <div className="countdown-bar">
+      {side === 'right' && <div className="right timer">{secondsRemaining}</div>}
+
       <div
-        className="remaining"
+        className="percent-remaining"
         style={{
-          height: `${remainingPercent}%`,
+          height: `${percentRemaining}%`,
           backgroundColor: 'rgb(205, 205, 205)',
           boxShadow: getBoxShadow(),
         }}
       ></div>
+
+      {side === 'left' && <div className="left timer">{secondsRemaining}</div>}
     </div>
   );
 };

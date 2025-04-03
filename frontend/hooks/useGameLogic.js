@@ -93,6 +93,8 @@ const useGameLogic = () => {
     cellValues,
     moveQueue,
     xIsNext,
+    xTimeRemaining,
+    oTimeRemaining,
     (100 * xTimeRemaining) / TIME_LIMIT, // xTimeRemainingPercent
     (100 * oTimeRemaining) / TIME_LIMIT, // oTimeRemainingPercent
     resettingCellIndex,
