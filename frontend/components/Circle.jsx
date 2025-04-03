@@ -13,7 +13,7 @@ const Circle = (props) => (
       cy="12"
       r="7"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="1"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
