@@ -18,6 +18,11 @@ const Grid = ({ cellValues, moveQueue, onCellClickAt, xIsNext, resettingCellInde
 
   return (
     <div className="grid">
+      <div className="left line"></div>
+      <div className="right line"></div>
+      <div className="top line"></div>
+      <div className="bottom line"></div>
+
       {cellValues.map((cellValue, index) => (
         <Cell
           key={index}
