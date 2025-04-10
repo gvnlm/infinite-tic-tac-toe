@@ -12,7 +12,8 @@ const COUNTDOWN_INTERVAL = 20;
 const RESETTING_CELL_DURATION = 180;
 
 const useGameLogic = () => {
-  const [gameStatus, setGameStatus] = useState(GameStatus.ONGOING);
+  const [status, setStatus] = useState(GameStatus.ONGOING);
+  const [winningLine, setWinningLine] = useState(null);
   const [round, setRound] = useState(1);
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
   const [moveQueue, setMoveQueue] = useState([]);
@@ -27,7 +28,7 @@ const useGameLogic = () => {
   // Handle countdown
   useEffect(() => {
     // Stop countdown when game over
-    if (gameStatus !== GameStatus.ONGOING) {
+    if (status !== GameStatus.ONGOING) {
       return;
     }
 
@@ -35,7 +36,7 @@ const useGameLogic = () => {
     const setTimeRemaining = xIsNext ? setXTimeRemaining : setOTimeRemaining;
 
     if (timeRemaining <= 0) {
-      setGameStatus(xIsNext ? GameStatus.O_WON : GameStatus.X_WON);
+      setStatus(xIsNext ? GameStatus.O_WON : GameStatus.X_WON);
       return;
     }
 
@@ -56,7 +57,7 @@ const useGameLogic = () => {
 
   const handleCellClickAt = (index) => () => {
     // If game over
-    if (gameStatus !== GameStatus.ONGOING) {
+    if (status !== GameStatus.ONGOING) {
       return;
     }
 
@@ -80,7 +81,8 @@ const useGameLogic = () => {
 
     applyMoveAt(index, newCellValues, newMoveQueue, xIsNext);
 
-    setGameStatus(getGameStatus(newCellValues));
+    setStatus(getStatus(newCellValues));
+    setWinningLine(getWinningLine(newCellValues));
     setRound((prev) => prev + !xIsNext);
     setCellValues(newCellValues);
     setMoveQueue(newMoveQueue);
@@ -88,7 +90,8 @@ const useGameLogic = () => {
   };
 
   return [
-    gameStatus,
+    status,
+    winningLine,
     round,
     cellValues,
     moveQueue,
@@ -102,8 +105,8 @@ const useGameLogic = () => {
   ];
 };
 
-const getGameStatus = (cellValues) => {
-  const winner = getWinner(cellValues);
+const getStatus = (cellValues) => {
+  const { winner } = getWinner(cellValues);
 
   if (winner === 'X') {
     return GameStatus.X_WON;
@@ -114,6 +117,10 @@ const getGameStatus = (cellValues) => {
   } else {
     return GameStatus.DRAW;
   }
+};
+
+const getWinningLine = (cellValues) => {
+  return getWinner(cellValues).line;
 };
 
 export default useGameLogic;

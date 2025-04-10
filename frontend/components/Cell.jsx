@@ -3,19 +3,31 @@ import Cross from './Cross';
 
 import '../styles/Cell.css';
 
-const Cell = ({ value, valueSize, onCellClick, xIsNext, isNextToReset, isResetting }) => {
+const Cell = ({
+  value,
+  valueSize,
+  onCellClick,
+  xIsNext,
+  isNextToReset,
+  isResetting,
+  isNonWinning,
+}) => {
   return (
     <button className="cell" onClick={onCellClick}>
       {value === 'X' && (
         <Cross
-          className={`value ${isNextToReset ? 'is-next-to-reset' : ''}`}
+          className={`value ${isNextToReset ? 'is-next-to-reset' : ''} ${
+            isNonWinning ? 'is-non-winning' : ''
+          }`}
           style={{ width: valueSize, height: valueSize }}
         />
       )}
 
       {value === 'O' && (
         <Circle
-          className={`value ${isNextToReset ? 'is-next-to-reset' : ''}`}
+          className={`value ${isNextToReset ? 'is-next-to-reset' : ''} ${
+            isNonWinning ? 'is-non-winning' : ''
+          }`}
           style={{ width: valueSize, height: valueSize }}
         />
       )}

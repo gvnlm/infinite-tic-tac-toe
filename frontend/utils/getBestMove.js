@@ -19,7 +19,7 @@ const max_value = (cellValues, moveQueue, cutoffDepth) => {
     return { move: null, utility: CUTOFF_UTILITY };
   }
 
-  const winner = getWinner(cellValues);
+  const { winner } = getWinner(cellValues);
 
   if (winner === 'O') {
     return { move: null, utility: O_WIN_UTILITY };
@@ -52,7 +52,7 @@ const min_value = (cellValues, moveQueue, cutoffDepth) => {
     return { move: null, utility: CUTOFF_UTILITY };
   }
 
-  const winner = getWinner(cellValues);
+  const { winner } = getWinner(cellValues);
 
   if (winner === 'O') {
     return { move: null, utility: O_WIN_UTILITY };

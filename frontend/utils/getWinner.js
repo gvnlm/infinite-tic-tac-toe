@@ -19,11 +19,11 @@ const getWinner = (cellValues) => {
       cellValues[a] === cellValues[b] &&
       cellValues[b] === cellValues[c]
     ) {
-      return cellValues[a];
+      return { winner: cellValues[a], line: [a, b, c] };
     }
   }
 
-  return null;
+  return { winner: null, line: null };
 };
 
 export default getWinner;

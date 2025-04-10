@@ -7,7 +7,8 @@ import '../styles/Game.css';
 
 const Game = () => {
   const [
-    gameStatus,
+    status,
+    winningLine,
     round,
     cellValues,
     moveQueue,
@@ -24,9 +25,9 @@ const Game = () => {
     <div className="game">
       <div className="header">
         <p>Round {round}</p>
-        {gameStatus === GameStatus.X_WON && <p>X has won!</p>}
-        {gameStatus === GameStatus.O_WON && <p>O has won!</p>}
-        {gameStatus === GameStatus.DRAW && <p>Draw!</p>}
+        {status === GameStatus.X_WON && <p>X has won!</p>}
+        {status === GameStatus.O_WON && <p>O has won!</p>}
+        {status === GameStatus.DRAW && <p>Draw!</p>}
       </div>
 
       <div className="body">
@@ -42,6 +43,7 @@ const Game = () => {
           onCellClickAt={handleCellClickAt}
           xIsNext={xIsNext}
           resettingCellIndex={resettingCellIndex}
+          winningLine={winningLine}
         />
 
         <CountdownBar

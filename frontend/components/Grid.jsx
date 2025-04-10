@@ -4,7 +4,14 @@ import '../styles/Grid.css';
 
 const VALUE_SHRINK_PERCENTAGE = 12.5;
 
-const Grid = ({ cellValues, moveQueue, onCellClickAt, xIsNext, resettingCellIndex }) => {
+const Grid = ({
+  cellValues,
+  moveQueue,
+  onCellClickAt,
+  xIsNext,
+  resettingCellIndex,
+  winningLine,
+}) => {
   const getValueSizeAt = (index, moveQueue) => {
     const valueAge = [...moveQueue].reverse().indexOf(index);
 
@@ -32,6 +39,7 @@ const Grid = ({ cellValues, moveQueue, onCellClickAt, xIsNext, resettingCellInde
           xIsNext={xIsNext}
           isNextToReset={moveQueue.length === 6 && moveQueue[0] === index}
           isResetting={index === resettingCellIndex}
+          isNonWinning={winningLine?.includes(index) === false}
         />
       ))}
     </div>
