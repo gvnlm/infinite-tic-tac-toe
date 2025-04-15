@@ -1,5 +1,5 @@
-import Circle from './Circle';
-import Cross from './Cross';
+import Circle from './icons/Circle';
+import Cross from './icons/Cross';
 
 import '../styles/Cell.css';
 
