@@ -8,7 +8,7 @@
 }
 
 .countdown-bar .percent-remaining {
-  width: 20px;
+  width: 15px;
   border-radius: inherit;
   /* Ensure glow effect overlays the timer */
   z-index: 1;
