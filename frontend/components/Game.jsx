@@ -18,10 +18,17 @@ const Game = () => {
     oTimeRemainingPercent,
     resettingCellIndex,
     handleCellClickAt,
+    reset,
   ] = useGameLogic();
 
+  const handleReset = () => {
+    if (status != GameStatus.ONGOING) {
+      reset();
+    }
+  };
+
   return (
-    <div className="game">
+    <div className="game" onClick={handleReset}>
       <div className="header">
         {status === GameStatus.X_WON && <p>X has won!</p>}
         {status === GameStatus.O_WON && <p>O has won!</p>}

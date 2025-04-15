@@ -87,6 +87,17 @@ const useGameLogic = () => {
     setIsXNext((prev) => !prev);
   };
 
+  const reset = () => {
+    setStatus(GameStatus.ONGOING);
+    setWinningLine(null);
+    setCellValues(Array(9).fill(null));
+    setMoveQueue([]);
+    setIsXNext(true);
+    setXTimeRemaining(TIME_LIMIT);
+    setOTimeRemaining(TIME_LIMIT);
+    setResettingCellIndex(null);
+  };
+
   return [
     status,
     winningLine,
@@ -99,6 +110,7 @@ const useGameLogic = () => {
     (100 * oTimeRemaining) / TIME_LIMIT, // oTimeRemainingPercent
     resettingCellIndex,
     handleCellClickAt,
+    reset,
   ];
 };
 
