@@ -9,6 +9,11 @@
   background-color: inherit;
 }
 
+/* Colour of pieces */
+.cell .value * {
+  color: rgb(200, 200, 200);
+}
+
 .cell .is-non-winning * {
   opacity: 0.1;
   transition: opacity 0.1s linear;

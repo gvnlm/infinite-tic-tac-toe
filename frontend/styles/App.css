@@ -4,9 +4,14 @@
   align-items: center;
   height: 100vh;
   background-color: rgb(20, 20, 20);
-  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 250;
+  font-size: 1.25rem;
+  text-shadow: 0 0 0.4rem rgb(50, 50, 50);
 }
 
 .app * {
-  color: rgb(205, 205, 205);
+  color: rgb(100, 100, 100);
 }

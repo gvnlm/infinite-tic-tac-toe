@@ -14,10 +14,6 @@
   z-index: 1;
 }
 
-.countdown-bar .right.timer {
-  text-align: right;
-}
-
 .countdown-bar .timer {
-  width: 2rem;
+  width: 2.5rem;
 }

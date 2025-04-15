@@ -35,10 +35,6 @@ const Game = () => {
         <p>
           {xWins} - {oWins}
         </p>
-
-        {status === GameStatus.X_WON && <p>X has won!</p>}
-        {status === GameStatus.O_WON && <p>O has won!</p>}
-        {status === GameStatus.DRAW && <p>Draw!</p>}
       </div>
 
       <div className="body">
@@ -64,7 +60,13 @@ const Game = () => {
         />
       </div>
 
-      <div className="footer">Footer placeholder</div>
+      <div className="footer">
+        {status === GameStatus.X_WON && <p>X has won!</p>}
+        {status === GameStatus.O_WON && <p>O has won!</p>}
+        {status === GameStatus.DRAW && <p>Draw!</p>}
+
+        {status !== GameStatus.ONGOING && <p>Click anywhere to play again.</p>}
+      </div>
     </div>
   );
 };
