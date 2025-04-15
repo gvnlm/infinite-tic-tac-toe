@@ -9,7 +9,6 @@ const Game = () => {
   const [
     status,
     winningLine,
-    round,
     cellValues,
     moveQueue,
     xIsNext,
@@ -24,7 +23,6 @@ const Game = () => {
   return (
     <div className="game">
       <div className="header">
-        <p>Round {round}</p>
         {status === GameStatus.X_WON && <p>X has won!</p>}
         {status === GameStatus.O_WON && <p>O has won!</p>}
         {status === GameStatus.DRAW && <p>Draw!</p>}

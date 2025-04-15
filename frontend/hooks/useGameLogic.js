@@ -14,7 +14,6 @@ const RESETTING_CELL_DURATION = 180;
 const useGameLogic = () => {
   const [status, setStatus] = useState(GameStatus.ONGOING);
   const [winningLine, setWinningLine] = useState(null);
-  const [round, setRound] = useState(1);
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
   const [moveQueue, setMoveQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
@@ -83,7 +82,6 @@ const useGameLogic = () => {
 
     setStatus(getStatus(newCellValues));
     setWinningLine(getWinningLine(newCellValues));
-    setRound((prev) => prev + !xIsNext);
     setCellValues(newCellValues);
     setMoveQueue(newMoveQueue);
     setIsXNext((prev) => !prev);
@@ -92,7 +90,6 @@ const useGameLogic = () => {
   return [
     status,
     winningLine,
-    round,
     cellValues,
     moveQueue,
     xIsNext,
