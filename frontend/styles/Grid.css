@@ -1,8 +1,9 @@
 .grid {
   display: flex;
   flex-wrap: wrap;
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1;
   position: relative;
 }
 

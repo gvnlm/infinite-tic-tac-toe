@@ -1,7 +1,7 @@
 .game {
   width: 100%;
   height: 98%;
-  padding: 0 2%;
+  padding: 0 1%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11,7 +11,18 @@
 .game .header,
 .game .footer {
   height: 10%;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
   text-align: center;
+}
+
+.game .header {
+  justify-content: flex-start;
+}
+
+.game .footer {
+  justify-content: flex-end;
 }
 
 .game .body {
