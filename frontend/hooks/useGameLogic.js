@@ -12,6 +12,8 @@ const COUNTDOWN_INTERVAL = 20;
 const RESETTING_CELL_DURATION = 180;
 
 const useGameLogic = () => {
+  const [xWins, setXWins] = useState(0);
+  const [oWins, setOWins] = useState(0);
   const [status, setStatus] = useState(GameStatus.ONGOING);
   const [winningLine, setWinningLine] = useState(null);
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
@@ -35,7 +37,14 @@ const useGameLogic = () => {
     const setTimeRemaining = xIsNext ? setXTimeRemaining : setOTimeRemaining;
 
     if (timeRemaining <= 0) {
-      setStatus(xIsNext ? GameStatus.O_WON : GameStatus.X_WON);
+      if (xIsNext) {
+        setStatus(GameStatus.O_WON);
+        setOWins((prev) => prev + 1);
+      } else {
+        setStatus(GameStatus.X_WON);
+        setXWins((prev) => prev + 1);
+      }
+
       return;
     }
 
@@ -70,17 +79,30 @@ const useGameLogic = () => {
     const newCellValues = [...cellValues];
     const newMoveQueue = [...moveQueue];
 
+    // Reset oldest move if necessary
     if (moveQueue.length >= 6) {
       setResettingCellIndex(moveQueue[0]);
 
+      // Timeout for reset animation
       setTimeout(() => {
         setResettingCellIndex(null);
       }, RESETTING_CELL_DURATION);
     }
 
+    // Apply move
     applyMoveAt(index, newCellValues, newMoveQueue, xIsNext);
 
-    setStatus(getStatus(newCellValues));
+    const newStatus = getStatus(newCellValues);
+
+    // Update wins if necessary
+    if (newStatus === GameStatus.X_WON) {
+      setXWins((prev) => prev + 1);
+    }
+    if (newStatus === GameStatus.O_WON) {
+      setOWins((prev) => prev + 1);
+    }
+
+    setStatus(newStatus);
     setWinningLine(getWinningLine(newCellValues));
     setCellValues(newCellValues);
     setMoveQueue(newMoveQueue);
@@ -99,6 +121,8 @@ const useGameLogic = () => {
   };
 
   return [
+    xWins,
+    oWins,
     status,
     winningLine,
     cellValues,

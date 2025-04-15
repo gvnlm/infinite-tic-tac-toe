@@ -7,6 +7,8 @@ import '../styles/Game.css';
 
 const Game = () => {
   const [
+    xWins,
+    oWins,
     status,
     winningLine,
     cellValues,
@@ -30,6 +32,10 @@ const Game = () => {
   return (
     <div className="game" onClick={handleReset}>
       <div className="header">
+        <p>
+          {xWins} - {oWins}
+        </p>
+
         {status === GameStatus.X_WON && <p>X has won!</p>}
         {status === GameStatus.O_WON && <p>O has won!</p>}
         {status === GameStatus.DRAW && <p>Draw!</p>}
