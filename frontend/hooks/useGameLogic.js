@@ -120,7 +120,7 @@ const useGameLogic = () => {
     setResettingCellIndex(null);
   };
 
-  return [
+  return {
     xWins,
     oWins,
     status,
@@ -130,12 +130,12 @@ const useGameLogic = () => {
     xIsNext,
     xTimeRemaining,
     oTimeRemaining,
-    (100 * xTimeRemaining) / TIME_LIMIT, // xTimeRemainingPercent
-    (100 * oTimeRemaining) / TIME_LIMIT, // oTimeRemainingPercent
+    xTimeRemainingPercent: (100 * xTimeRemaining) / TIME_LIMIT,
+    oTimeRemainingPercent: (100 * oTimeRemaining) / TIME_LIMIT,
     resettingCellIndex,
     handleCellClickAt,
     reset,
-  ];
+  };
 };
 
 const getStatus = (cellValues) => {

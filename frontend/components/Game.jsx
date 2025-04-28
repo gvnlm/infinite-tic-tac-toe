@@ -7,7 +7,7 @@ import Back from './icons/Back';
 import '../styles/Game.css';
 
 const Game = () => {
-  const [
+  const {
     xWins,
     oWins,
     status,
@@ -22,7 +22,7 @@ const Game = () => {
     resettingCellIndex,
     handleCellClickAt,
     reset,
-  ] = useGameLogic();
+  } = useGameLogic();
 
   const handleReset = () => {
     if (status != GameStatus.ONGOING) {
