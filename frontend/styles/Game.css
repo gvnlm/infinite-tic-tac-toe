@@ -13,15 +13,52 @@
   height: 10%;
   flex: 1 1 auto;
   display: flex;
-  flex-direction: column;
   text-align: center;
 }
 
 .game .header {
-  justify-content: flex-start;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  --back-icon-width: 2.25rem;
+  --back-icon-transition-time: 0.25s;
+}
+
+.game .header::after {
+  content: '';
+  width: var(--back-icon-width);
+}
+
+.game .header .back-icon-wrapper {
+  margin: 20px 0;
+}
+
+.game .header .back-icon * {
+  color: rgb(100, 100, 100);
+  transition: color var(--back-icon-transition-time) ease-in-out;
+}
+
+.game .header .back-icon {
+  width: var(--back-icon-width);
+  filter: drop-shadow(0 0 0.1rem rgb(50, 50, 50)) drop-shadow(0 0 0.1rem rgb(50, 50, 50));
+  transition: transform var(--back-icon-transition-time) ease-in-out, filter 0.25s ease-in-out;
+}
+
+.game .header .back-icon-wrapper:hover .back-icon {
+  cursor: pointer;
+  transform: scaleX(-1.25) scaleY(1.25);
+  color: rgb(200, 200, 200);
+  filter: drop-shadow(0 0 0.1rem rgb(100, 100, 100)) drop-shadow(0 0 0.1rem rgb(100, 100, 100));
+}
+
+.game .header .back-icon-wrapper:hover .back-icon * {
+  color: rgb(200, 200, 200);
 }
 
 .game .footer {
+  flex-direction: column;
   justify-content: flex-end;
 }
 

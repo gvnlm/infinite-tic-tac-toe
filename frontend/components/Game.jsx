@@ -2,6 +2,7 @@ import Grid from './Grid';
 import CountdownBar from './CountdownBar';
 import useGameLogic from '../hooks/useGameLogic';
 import GameStatus from '../constants/gameStatus';
+import Back from './icons/Back';
 
 import '../styles/Game.css';
 
@@ -32,6 +33,11 @@ const Game = () => {
   return (
     <div className="game" onClick={handleReset}>
       <div className="header">
+        <div className="back-icon-wrapper">
+          {/* Wrap to avoid transform stuttering when hovering over icon edge */}
+          <Back className="back-icon" />
+        </div>
+
         <p>
           {xWins} - {oWins}
         </p>
