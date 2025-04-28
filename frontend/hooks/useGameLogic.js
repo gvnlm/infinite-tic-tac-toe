@@ -10,8 +10,10 @@ const TIME_LIMIT = 10_000;
 const COUNTDOWN_INTERVAL = 20;
 // Slightly shorter than despawn animation duration (Cell.css) to ensure animation does not complete before timeout
 const RESETTING_CELL_DURATION = 180;
+// Minimum time AI takes per move
+const AI_THINK_TIME = 1000;
 
-const useGameLogic = () => {
+const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
   const [xWins, setXWins] = useState(0);
   const [oWins, setOWins] = useState(0);
   const [status, setStatus] = useState(GameStatus.ONGOING);
@@ -56,12 +58,15 @@ const useGameLogic = () => {
     return () => clearTimeout(timeoutId);
   }, [xTimeRemaining, oTimeRemaining, xIsNext]);
 
-  // Let AI pick O's move
-  // useEffect(() => {
-  //   if (!xIsNext) {
-  //     handleCellClickAt(getBestMove(cellValues, moveQueue, xIsNext))();
-  //   }
-  // }, [xIsNext]);
+  // Let AI pick move
+  useEffect(() => {
+    if ((xIsAI && xIsNext) || (oIsAI && !xIsNext)) {
+      setTimeout(
+        () => handleCellClickAt(getBestMove(cellValues, moveQueue, xIsNext))(),
+        AI_THINK_TIME
+      );
+    }
+  }, [xIsNext]);
 
   const handleCellClickAt = (index) => () => {
     // If game over
@@ -74,7 +79,9 @@ const useGameLogic = () => {
       return;
     }
 
-    playNextShepardTone();
+    if (soundIsOn) {
+      playNextShepardTone();
+    }
 
     const newCellValues = [...cellValues];
     const newMoveQueue = [...moveQueue];

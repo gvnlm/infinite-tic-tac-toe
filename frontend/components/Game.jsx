@@ -6,7 +6,7 @@ import Back from './icons/Back';
 
 import '../styles/Game.css';
 
-const Game = () => {
+const Game = ({ onClickHome }) => {
   const {
     xWins,
     oWins,
@@ -22,7 +22,7 @@ const Game = () => {
     resettingCellIndex,
     handleCellClickAt,
     reset,
-  } = useGameLogic();
+  } = useGameLogic({ xIsAI: false, oIsAI: false, soundIsOn: true });
 
   const handleReset = () => {
     if (status != GameStatus.ONGOING) {
@@ -35,7 +35,7 @@ const Game = () => {
       <div className="header">
         <div className="back-icon-wrapper">
           {/* Wrap to avoid transform stuttering when hovering over icon edge */}
-          <Back className="back-icon" />
+          <Back className="back-icon" onClick={onClickHome} />
         </div>
 
         <p>

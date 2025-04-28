@@ -1,0 +1,23 @@
+.home {
+  width: 100%;
+  height: 100%;
+  padding: 0 1%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 200px;
+}
+
+.home .background-game {
+  position: absolute;
+  transform: rotateX(10deg) rotateY(10deg) translate(10%, -15%);
+  overflow: hidden;
+  z-index: -1;
+}
+
+.home .background-game .grid {
+  max-width: 100vw;
+  max-height: 100vh;
+  opacity: 0.1;
+}
