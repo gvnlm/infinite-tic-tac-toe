@@ -9,6 +9,14 @@
   perspective: 200px;
 }
 
+.home .game-mode-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+}
+
 .home .background-game {
   position: absolute;
   transform: rotateX(10deg) rotateY(10deg) translate(10%, -15%);

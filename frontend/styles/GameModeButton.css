@@ -1,0 +1,28 @@
+.game-mode-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-mode-button button {
+  font: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgb(200, 200, 200);
+  text-shadow: 0 0 0.4rem rgb(100, 100, 100);
+}
+
+.game-mode-button .cross,
+.game-mode-button .circle {
+  width: 1.5rem;
+  height: auto;
+  filter: drop-shadow(0 0 0.025vw rgb(50, 50, 50)) drop-shadow(0 0 0.05vw rgb(50, 50, 50));
+  scale: 0;
+  transition: scale 0.25s ease-in-out;
+}
+
+.game-mode-button:hover .cross,
+.game-mode-button:hover .circle {
+  scale: 1;
+}
