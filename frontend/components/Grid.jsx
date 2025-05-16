@@ -11,6 +11,8 @@ const Grid = ({
   xIsNext,
   resettingCellIndex,
   winningLine,
+  xIsAI,
+  oIsAI,
 }) => {
   const getValueSizeAt = (index, moveQueue) => {
     const valueAge = [...moveQueue].reverse().indexOf(index);
@@ -40,6 +42,8 @@ const Grid = ({
           isNextToReset={moveQueue.length === 6 && moveQueue[0] === index}
           isResetting={index === resettingCellIndex}
           isNonWinning={winningLine?.includes(index) === false}
+          xIsAI={xIsAI}
+          oIsAI={oIsAI}
         />
       ))}
     </div>

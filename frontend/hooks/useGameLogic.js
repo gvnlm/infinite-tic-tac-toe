@@ -4,7 +4,6 @@ import useShepardTones from './useShepardTones';
 import GameStatus from '../constants/gameStatus';
 import getWinner from '../utils/getWinner';
 import getBestMove from '../utils/getBestMove';
-import applyMoveAt from '../utils/applyMoveAt';
 
 const TIME_LIMIT = 10_000;
 const COUNTDOWN_INTERVAL = 20;
@@ -61,10 +60,7 @@ const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
   // Let AI pick move
   useEffect(() => {
     if ((xIsAI && xIsNext) || (oIsAI && !xIsNext)) {
-      setTimeout(
-        () => handleCellClickAt(getBestMove(cellValues, moveQueue, xIsNext))(),
-        AI_THINK_TIME
-      );
+      setTimeout(() => applyMoveAt(getBestMove(cellValues, moveQueue, xIsNext)), AI_THINK_TIME);
     }
   }, [xIsNext]);
 
@@ -74,19 +70,25 @@ const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
       return;
     }
 
+    // If moving player is AI
+    if ((xIsNext && xIsAI) || (!xIsNext && oIsAI)) {
+      return;
+    }
+
     // If cell already occupied
     if (cellValues[index] !== null) {
       return;
     }
 
+    applyMoveAt(index);
+  };
+
+  const applyMoveAt = (index) => {
     if (soundIsOn) {
       playNextShepardTone();
     }
 
-    const newCellValues = [...cellValues];
-    const newMoveQueue = [...moveQueue];
-
-    // Reset oldest move if necessary
+    // If there are 6 moves on the board, the oldest move will be removed by this new move, so mark it for a despawn animation
     if (moveQueue.length >= 6) {
       setResettingCellIndex(moveQueue[0]);
 
@@ -96,8 +98,17 @@ const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
       }, RESETTING_CELL_DURATION);
     }
 
-    // Apply move
-    applyMoveAt(index, newCellValues, newMoveQueue, xIsNext);
+    const newCellValues = [...cellValues];
+    const newMoveQueue = [...moveQueue];
+
+    // Place move
+    newMoveQueue.push(index);
+    newCellValues[index] = xIsNext ? 'X' : 'O';
+
+    // Remove oldest move if more than 6 moves on board
+    if (newMoveQueue.length > 6) {
+      newCellValues[newMoveQueue.shift()] = null;
+    }
 
     const newStatus = getStatus(newCellValues);
 

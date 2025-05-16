@@ -6,7 +6,7 @@ import Back from './icons/Back';
 
 import '../styles/Game.css';
 
-const Game = ({ onClickHome }) => {
+const Game = ({ onClickHome, xIsAI = false, oIsAI = false }) => {
   const {
     xWins,
     oWins,
@@ -22,7 +22,7 @@ const Game = ({ onClickHome }) => {
     resettingCellIndex,
     handleCellClickAt,
     reset,
-  } = useGameLogic({ xIsAI: false, oIsAI: false, soundIsOn: true });
+  } = useGameLogic({ xIsAI, oIsAI, soundIsOn: true });
 
   const handleReset = () => {
     if (status != GameStatus.ONGOING) {
@@ -57,6 +57,8 @@ const Game = ({ onClickHome }) => {
           xIsNext={xIsNext}
           resettingCellIndex={resettingCellIndex}
           winningLine={winningLine}
+          xIsAI={xIsAI}
+          oIsAI={oIsAI}
         />
 
         <CountdownBar

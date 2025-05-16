@@ -11,7 +11,29 @@ const Cell = ({
   isNextToReset,
   isResetting,
   isNonWinning,
+  xIsAI,
+  oIsAI,
 }) => {
+  const renderPlaceholderMove = () => {
+    if (value !== null || isResetting) {
+      return;
+    }
+
+    if ((xIsNext && xIsAI) || (!xIsNext && oIsAI)) {
+      return;
+    }
+
+    return xIsNext ? <Cross className="placeholder" /> : <Circle className="placeholder" />;
+  };
+
+  const renderDespawningMove = () => {
+    if (value !== null || !isResetting) {
+      return;
+    }
+
+    return xIsNext ? <Circle className="is-despawning" /> : <Cross className="is-despawning" />;
+  };
+
   return (
     <button className="cell" onClick={onCellClick}>
       {value === 'X' && (
@@ -32,18 +54,8 @@ const Cell = ({
         />
       )}
 
-      {value === null &&
-        (!isResetting ? (
-          xIsNext ? (
-            <Cross className="placeholder" />
-          ) : (
-            <Circle className="placeholder" />
-          )
-        ) : xIsNext ? (
-          <Circle className="is-despawning" />
-        ) : (
-          <Cross className="is-despawning" />
-        ))}
+      {renderPlaceholderMove()}
+      {renderDespawningMove()}
     </button>
   );
 };

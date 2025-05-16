@@ -5,20 +5,28 @@ import Home from '../components/Home';
 
 import '../styles/App.css';
 
-const App = () => {
-  const [isInGame, setIsInGame] = useState(false);
+// Game modes
+const NONE = 0;
+const AI = 1;
+const LOCAL_MULTIPLAYER = 2;
 
-  const handlePlayGame = () => {
-    setIsInGame(true);
-  };
+const App = () => {
+  const [game, setGame] = useState(NONE);
 
   const handleGoHome = () => {
-    setIsInGame(false);
+    setGame(NONE);
   };
 
   return (
     <div className="app">
-      {isInGame ? <Game onClickHome={handleGoHome} /> : <Home onClickPlay={handlePlayGame} />}
+      {game === NONE && (
+        <Home
+          onClickAI={() => setGame(AI)}
+          onClickLocalMultiplayer={() => setGame(LOCAL_MULTIPLAYER)}
+        />
+      )}
+      {game === AI && <Game onClickHome={handleGoHome} oIsAI={true} />}
+      {game === LOCAL_MULTIPLAYER && <Game onClickHome={handleGoHome} />}
     </div>
   );
 };

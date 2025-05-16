@@ -1,5 +1,4 @@
 import getWinner from './getWinner';
-import applyMoveAt from './applyMoveAt';
 
 const INITIAL_CUTOFF_DEPTH = 10; // Cutoff depth when the grid is empty
 const X_WIN_UTILITY = -1;
@@ -37,7 +36,7 @@ const max_value = (cellValues, moveQueue, cutoffDepth) => {
     const newCellValues = [...cellValues];
     const newMoveQueue = [...moveQueue];
 
-    applyMoveAt(move, newCellValues, newMoveQueue, false);
+    placeMoveAt(move, newCellValues, newMoveQueue, false);
 
     return { move, utility: min_value(newCellValues, newMoveQueue, cutoffDepth - 1).utility };
   });
@@ -70,7 +69,7 @@ const min_value = (cellValues, moveQueue, cutoffDepth) => {
     const newCellValues = [...cellValues];
     const newMoveQueue = [...moveQueue];
 
-    applyMoveAt(move, newCellValues, newMoveQueue, true);
+    placeMoveAt(move, newCellValues, newMoveQueue, true);
 
     return { move, utility: max_value(newCellValues, newMoveQueue, cutoffDepth - 1).utility };
   });
@@ -78,6 +77,15 @@ const min_value = (cellValues, moveQueue, cutoffDepth) => {
   return moveUtilityPairs.reduce((minMoveUtilityPair, moveUtilityPair) =>
     moveUtilityPair.utility < minMoveUtilityPair.utility ? moveUtilityPair : minMoveUtilityPair
   );
+};
+
+const placeMoveAt = (index, cellValues, indexQueue, xIsNext) => {
+  indexQueue.push(index);
+  cellValues[index] = xIsNext ? 'X' : 'O';
+
+  if (indexQueue.length > 6) {
+    cellValues[indexQueue.shift()] = null;
+  }
 };
 
 export default getBestMove;
