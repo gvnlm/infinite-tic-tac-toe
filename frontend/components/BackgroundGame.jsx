@@ -3,6 +3,7 @@ import useGameLogic from '../hooks/useGameLogic';
 import GameStatus from '../constants/gameStatus';
 
 import '../styles/Game.css';
+import '../styles/BackgroundGame.css';
 
 // Infinite game played by AI, used as background of home screen
 const BackgroundGame = () => {
