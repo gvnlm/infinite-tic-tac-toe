@@ -9,7 +9,6 @@ const Home = ({ onClickAI, onClickLocalMultiplayer }) => {
       <div className="game-mode-buttons">
         <GameModeButton text="AI" onClick={onClickAI} />
         <GameModeButton text="Local Multiplayer" onClick={onClickLocalMultiplayer} />
-        <GameModeButton text="Online Multiplayer (coming soon)" />
       </div>
     </div>
   );
