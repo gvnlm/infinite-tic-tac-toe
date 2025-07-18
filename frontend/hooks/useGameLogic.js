@@ -5,14 +5,13 @@ import GameStatus from '../constants/gameStatus';
 import getWinner from '../utils/getWinner';
 import getBestMove from '../utils/getBestMove';
 
-const TIME_LIMIT = 10_000;
 const COUNTDOWN_INTERVAL = 20;
 // Slightly shorter than despawn animation duration (Cell.css) to ensure animation does not complete before timeout
 const RESETTING_CELL_DURATION = 180;
 // Minimum time AI takes per move
 const AI_THINK_TIME = 1000;
 
-const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
+const useGameLogic = ({ timeLimit, xIsAI = false, oIsAI = false, soundIsOn = true }) => {
   const [xWins, setXWins] = useState(0);
   const [oWins, setOWins] = useState(0);
   const [status, setStatus] = useState(GameStatus.ONGOING);
@@ -20,8 +19,8 @@ const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
   const [cellValues, setCellValues] = useState(Array(9).fill(null));
   const [moveQueue, setMoveQueue] = useState([]);
   const [xIsNext, setIsXNext] = useState(true);
-  const [xTimeRemaining, setXTimeRemaining] = useState(TIME_LIMIT);
-  const [oTimeRemaining, setOTimeRemaining] = useState(TIME_LIMIT);
+  const [xTimeRemaining, setXTimeRemaining] = useState(timeLimit);
+  const [oTimeRemaining, setOTimeRemaining] = useState(timeLimit);
   // Index of cell whose value is current despawning
   const [resettingCellIndex, setResettingCellIndex] = useState(null);
 
@@ -147,8 +146,8 @@ const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
     setCellValues(Array(9).fill(null));
     setMoveQueue([]);
     setIsXNext(true);
-    setXTimeRemaining(TIME_LIMIT);
-    setOTimeRemaining(TIME_LIMIT);
+    setXTimeRemaining(timeLimit);
+    setOTimeRemaining(timeLimit);
     setResettingCellIndex(null);
   };
 
@@ -162,8 +161,8 @@ const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
     xIsNext,
     xTimeRemaining,
     oTimeRemaining,
-    xTimeRemainingPercent: (100 * xTimeRemaining) / TIME_LIMIT,
-    oTimeRemainingPercent: (100 * oTimeRemaining) / TIME_LIMIT,
+    xTimeRemainingPercent: (100 * xTimeRemaining) / timeLimit,
+    oTimeRemainingPercent: (100 * oTimeRemaining) / timeLimit,
     resettingCellIndex,
     handleCellClickAt,
     reset,

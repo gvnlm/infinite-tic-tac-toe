@@ -6,6 +6,8 @@ import Back from './icons/Back';
 
 import '../styles/Game.css';
 
+const TIME_LIMIT = 10_000;
+
 const Game = ({ onClickHome, xIsAI = false, oIsAI = false }) => {
   const {
     xWins,
@@ -22,7 +24,7 @@ const Game = ({ onClickHome, xIsAI = false, oIsAI = false }) => {
     resettingCellIndex,
     handleCellClickAt,
     reset,
-  } = useGameLogic({ xIsAI, oIsAI, soundIsOn: true });
+  } = useGameLogic({ timeLimit: TIME_LIMIT, xIsAI, oIsAI, soundIsOn: true });
 
   const handleReset = () => {
     if (status != GameStatus.ONGOING) {

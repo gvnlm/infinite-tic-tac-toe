@@ -8,7 +8,7 @@ import '../styles/BackgroundGame.css';
 // Infinite game played by AI, used as background of home screen
 const BackgroundGame = () => {
   const { status, winningLine, cellValues, moveQueue, xIsNext, resettingCellIndex, reset } =
-    useGameLogic({ xIsAI: true, oIsAI: true, soundIsOn: false });
+    useGameLogic({ timeLimit: Infinity, xIsAI: true, oIsAI: true, soundIsOn: false });
 
   const handleReset = () => {
     if (status != GameStatus.ONGOING) {
