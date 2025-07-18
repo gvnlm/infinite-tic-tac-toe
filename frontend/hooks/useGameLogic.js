@@ -59,10 +59,24 @@ const useGameLogic = ({ xIsAI = false, oIsAI = false, soundIsOn = true }) => {
 
   // Let AI pick move
   useEffect(() => {
-    if ((xIsAI && xIsNext) || (oIsAI && !xIsNext)) {
-      setTimeout(() => applyMoveAt(getBestMove(cellValues, moveQueue, xIsNext)), AI_THINK_TIME);
+    if (status !== GameStatus.ONGOING) {
+      return;
     }
-  }, [xIsNext]);
+
+    // If it's AI's turn
+    if ((xIsAI && xIsNext) || (oIsAI && !xIsNext)) {
+      const timeoutId = setTimeout(() => {
+        const timeRemaining = xIsNext ? xTimeRemaining : oTimeRemaining;
+
+        // If AI has time
+        if (timeRemaining > 0) {
+          applyMoveAt(getBestMove(cellValues, moveQueue, xIsNext));
+        }
+      }, AI_THINK_TIME);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [xIsNext, status]);
 
   const handleCellClickAt = (index) => () => {
     // If game over
