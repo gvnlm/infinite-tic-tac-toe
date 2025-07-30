@@ -1,3 +1,4 @@
 .background-game * {
   cursor: default !important;
+  pointer-events: none !important;
 }
