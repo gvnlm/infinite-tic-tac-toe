@@ -41,3 +41,13 @@
   color: inherit;
   gap: 0.2rem;
 }
+
+.home .github-link,
+.home .github-link * {
+  transition: color 0.15s ease-in-out;
+}
+
+.home .github-link:hover,
+.home .github-link:hover * {
+  color: rgb(200, 200, 200);
+}
