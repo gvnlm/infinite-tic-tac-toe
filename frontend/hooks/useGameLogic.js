@@ -145,7 +145,8 @@ const useGameLogic = ({ timeLimit, xIsAI = false, oIsAI = false, soundIsOn = tru
     setWinningLine(null);
     setCellValues(Array(9).fill(null));
     setMoveQueue([]);
-    setIsXNext(true);
+    // Alternate first mover - starting from round 0, X moves first on even numbered rounds and O moves first on odd numbered rounds
+    setIsXNext((xWins + oWins) % 2 === 0);
     setXTimeRemaining(timeLimit);
     setOTimeRemaining(timeLimit);
     setResettingCellIndex(null);
