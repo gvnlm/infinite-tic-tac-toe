@@ -6,6 +6,11 @@ const O_WIN_UTILITY = 1;
 const CUTOFF_UTILITY = 0;
 
 const getBestMove = (cellValues, moveQueue, xIsNext) => {
+  // Hardcode best move for first move to bypass big minimax search
+  if (cellValues.every((cellValue) => cellValue === null)) {
+    return 0;
+  }
+
   if (xIsNext) {
     return min_value(cellValues, moveQueue, INITIAL_CUTOFF_DEPTH - moveQueue.length).move;
   } else {
